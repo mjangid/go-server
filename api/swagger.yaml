@@ -4,13 +4,13 @@ info:
   description: "This is a simple Beneficiary API, where you can Create, Read, and\
     \ Delete beneficiary"
   contact:
-    email: mjangid@cynergybank.co.uk
+    email: mjangid@example.co.uk
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
 servers:
-- url: https://mock.cynergybank.co.uk/
+- url: https://mock.example.co.uk/
   description: Beneficiary API Auto Mocking
 paths:
   /beneficiary:
