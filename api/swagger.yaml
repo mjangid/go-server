@@ -1,0 +1,212 @@
+openapi: 3.0.0
+info:
+  title: Beneficiary API
+  description: "This is a simple Beneficiary API, where you can Create, Read, and\
+    \ Delete beneficiary"
+  contact:
+    email: mjangid@cynergybank.co.uk
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://mock.cynergybank.co.uk/
+  description: Beneficiary API Auto Mocking
+paths:
+  /beneficiary:
+    get:
+      tags:
+      - Beneficiary
+      summary: Get all beneficiary
+      description: |
+        By selecting appropriate method, you can get all the available beneficiary for logged in user
+      operationId: getBeneficiary
+      responses:
+        "200":
+          description: List of all the beneficiary
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Beneficiary'
+                x-content-type: application/json
+        "400":
+          description: bad input parameter
+    post:
+      tags:
+      - Beneficiary
+      summary: Create a beneficiary
+      description: Create a beneficiary to the system
+      operationId: createBeneficiary
+      requestBody:
+        description: Beneficiary to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Beneficiary'
+      responses:
+        "201":
+          description: Beneficiary created
+        "400":
+          description: "invalid input, object invalid"
+        "401":
+          description: Unauthorised access
+        "409":
+          description: Beneficiary already exists
+        "500":
+          description: Server error
+  /{beneficiaryId}:
+    get:
+      tags:
+      - Beneficiary
+      summary: Get beneficiary by Id
+      description: get beneficiary by id
+      operationId: getBeneficiaryById
+      parameters:
+      - name: beneficiaryId
+        in: path
+        description: beneficiaryId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Beneficiary deleted
+        "401":
+          description: Unauthorised access
+        "404":
+          description: Beneficiary Not found
+        "500":
+          description: Server Error
+    put:
+      tags:
+      - Beneficiary
+      summary: Replace beneficiary
+      description: |
+        This operation is not supported yet
+      operationId: putBeneficiary
+      parameters:
+      - name: beneficiaryId
+        in: path
+        description: beneficiaryId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "405":
+          description: Method Not Allowed
+    delete:
+      tags:
+      - Beneficiary
+      summary: Delete beneficiary by Id
+      description: Delete beneficiary by id
+      operationId: deleteBeneficiaryById
+      parameters:
+      - name: beneficiaryId
+        in: path
+        description: beneficiaryId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Beneficiary deleted
+        "401":
+          description: Unauthorised access
+        "404":
+          description: Beneficiary Not found
+        "500":
+          description: Server Error
+    patch:
+      tags:
+      - Beneficiary
+      summary: Modify beneficiary
+      description: |
+        This operation is not supported yet
+      operationId: patchBeneficiary
+      parameters:
+      - name: beneficiaryId
+        in: path
+        description: beneficiaryId
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "405":
+          description: Method Not Allowed
+components:
+  schemas:
+    Beneficiary:
+      required:
+      - beneficiary_address
+      - beneficiary_name
+      - beneficiary_scheme
+      - beneficiary_scheme_id
+      - party_id
+      type: object
+      properties:
+        beneficiary_id:
+          type: integer
+          format: integer
+          example: 123456789
+        beneficiary_name:
+          type: string
+          example: Firstname Lastname
+        beneficiary_scheme:
+          type: string
+          format: SortcodeAccountNumber
+          example: SORTCODE_ACCOUNT
+        beneficiary_scheme_id:
+          type: string
+          example: "8080812312312"
+        beneficiary_address:
+          type: object
+          example:
+            addressLine1: address Line 1
+            addressLine2: address Line 2
+            addressLine3: address Line 3
+            city: City
+            postcode: post code
+        beneficiary_secondary_identifier:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        beneficiary_avatar:
+          type: object
+          example: Image
+        party_id:
+          type: string
+          example: customer_id
+        metadata:
+          type: object
+          example:
+            additional: information
+        date_created:
+          type: string
+          format: date-time
+      example:
+        beneficiary_id: 123456789
+        beneficiary_name: Firstname Lastname
+        metadata:
+          additional: information
+        beneficiary_address:
+          addressLine1: address Line 1
+          addressLine2: address Line 2
+          addressLine3: address Line 3
+          city: City
+          postcode: post code
+        beneficiary_scheme_id: "8080812312312"
+        beneficiary_avatar: Image
+        date_created: 2000-01-23T04:56:07.000+00:00
+        party_id: customer_id
+        beneficiary_scheme: SORTCODE_ACCOUNT
+        beneficiary_secondary_identifier: d290f1ee-6c54-4b01-90e6-d701748f0851
